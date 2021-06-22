@@ -10,18 +10,18 @@ class Strat:
         
         self.admin.BBI()
         self.admin.PCT_CHANGE()
+        self.admin.computeRSI()
 
         self.holdingPositions = np.empty((0), float)
 
-    def RSI_strat1(self): # kjøpe aksjer for 10 000 når rsi rsi har momentum på over 65
+    def RSI_strat1(self, tradingpower=10000): # Buy the stock when the RSI level reaches or is above 65
 
-        # for i in range(len(admin.df['RSI'])):
-        account = 100000
         bought = False
         shares = float()
+        account = tradingpower
 
         for i in range(21, len(self.admin.df['RSI'])):
-            rsi = float(self.admin.df.iloc[i:i+1 ,[8]].values[0]) #Få tak i verdien på kolonne 8 på gitt radintervall
+            rsi = float(self.admin.df.iloc[i:i+1 ,[8]].values[0])
             price = float(self.admin.df.iloc[i:i+1 ,[3]].values[0])
 
 
@@ -38,7 +38,7 @@ class Strat:
     
         return account
 
-    def RSI_strat2(self): #Teori om å kjøpe litt og litt så lenge rsi har momentum
+    def RSI_strat2(self): #Buy the stock in multiple blocks while RSI shows momentum in the stock.
 
         # for i in range(len(admin.df['RSI'])):
         account = 100000
@@ -67,10 +67,10 @@ class Strat:
         print(self.holdingPositions)
         return account
     
-    def RSI_strat3(self): # baserer seg på å finne medianen over en aksjeuke og kjøpe dersom rsi innfylles for median
-
-        # for i in range(len(admin.df['RSI'])):
-        account = 100000
+    # We check what the mean RSI level has been during the last week and if the RSI_buy level now is higher or the same, we buy because we
+    # believe that the momentum will continue to increase further until it reaches RSI_sell 
+    def RSI_strat3(self, tradingpower=10000, RSI_buy=40, RSI_sell=60):  
+        account = tradingpower
         shares = float()
         moneySpent = 0
         p = np.empty((0), int)
@@ -78,19 +78,19 @@ class Strat:
 
 
         for i in range(21, len(self.admin.df['RSI'])):
-            rsiMeanBuy = statistics.median(np.concatenate(self.admin.df.iloc[i-5:i ,[8]].values[0:5])) #Få tak i verdien på kolonne 8 på gitt radintervall
+            rsiMeanBuy = statistics.median(np.concatenate(self.admin.df.iloc[i-5:i ,[8]].values[0:5]))
             rsiMeanSell = self.admin.df.iloc[i-1:i ,[8]].values[0]
             price = float(self.admin.df.iloc[i:i+1 ,[3]].values[0])
 
 
-            if rsiMeanBuy < 40 and bought == False and moneySpent<9000:
+            if rsiMeanBuy < RSI_buy and bought == False and moneySpent<9000:
                 shares = 3000 / price
                 moneySpent+=3000
                 account = account - 3000 #- 80
                 p = np.append(p, price)
                 bought = True
 
-            if ((rsiMeanSell > 60) and bought == True):
+            if ((rsiMeanSell > RSI_sell) and bought == True):
                 account = account + (  shares * price  ) #- 80
                 shares=0
                 bought = False
@@ -101,9 +101,10 @@ class Strat:
         print(self.holdingPositions)
         return account
 
-    def RSI_strat4(self): #Når rsi er over 60 så selger vi med engang vi kan tjene penger på å selge
+    #If the RSI level is above the preferred value, we buy and sell as soon as the stock can be sold for profit.
+    def RSI_strat4(self, tradingpower=10000, RSI_value=60): 
 
-        account = 100000
+        account = tradingpower
         shares = float()
         moneySpent = 0
         p = np.empty((0), int)
@@ -114,7 +115,7 @@ class Strat:
             rsi = self.admin.df.iloc[i:i+1, [8]].values[0]
             price = float(self.admin.df.iloc[i:i+1, [3]].values[0])
 
-            if rsi > 60 and bought == False:
+            if rsi > RSI_value and bought == False:
                 shares = 10000/price
                 account-=10000
                 bought = True
@@ -128,9 +129,9 @@ class Strat:
 
 
 
-
+#Example for Microsoft with strat 4:
 admin = Strat('MSFT')
-print(admin.RSI_strat4())
+print("Account balance: ", admin.RSI_strat4())
 # print(np.concatenate(admin.admin.df.iloc[21:31 ,[8]].values[0:12]))
 
 

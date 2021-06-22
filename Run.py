@@ -72,7 +72,7 @@ class Run():
         
         # print(diff.head())
         self.df['RSI'] = rsi
-        return rsi
+        # return rsi
 
     def BBI(self):
 
@@ -177,18 +177,13 @@ class Run():
         plt.show()
 
 #Change ticker to any preferred stock. Find tickers here at: https://finance.yahoo.com/
-admin = Run("AAPL", fullPeriod=True, period='1mo', interval='1h')
-print(admin.computeRSI())
-admin.computeRSI()
-admin.BBI()
-admin.PCT_CHANGE()
-admin.pltShow()
-# admin = Run('PNDX-B.ST', fullPeriod=True)
-# admin.bestFitLine(show=True)
-# print(admin.df)
-# print(plt.style.available)
+#Example of plotting the Apple stock
+# admin = Run("AAPL", fullPeriod=True, period='1mo', interval='1h')
+# print(admin.computeRSI())
+# admin.computeRSI()
+# admin.BBI()
+# admin.PCT_CHANGE()
 # admin.pltShow()
-# print(admin.df)
 
 
 

@@ -13,8 +13,12 @@ class Strat:
 
         self.holdingPositions = np.empty((0), float)
     
-     #finne gjennomsnittsprisen over gitt antall dager og hvis neste pris er under, kjøp og selg når prisen er høy nok til profitt
-     #basert på "buy low, sell high" teorien
+    
+    #Based upon finding the mean price of what a stock has been during a couple of days. If the price of that stock falls below
+    #this mean price, we will buy some stocks because we in theory can believe that the price will increase back to the mean price.
+    #However in this case we will sell them again at the moment the price of the stock can be sold for a profit. 
+    #Since we expect the price to rise again, we can asume that there is a fair chance of making a profit since the price should
+    #should go up.
     def meanStrat(self):
         account = 100000
         shares = float()

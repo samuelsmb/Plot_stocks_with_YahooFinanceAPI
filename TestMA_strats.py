@@ -124,10 +124,6 @@ class Strat:
         
         return (MAprofit - (buy+sell)*40)
 
-
-
-myPortfolioOSEBX = list(('YAR.OL', 'EQNR.OL', 'TEL.OL', 'DNB.OL', 'MOWI.OL', 'ATEA.Ol', 'KIT.OL', 'SCHA.OL', 'BORR.OL', 'GSF.OL'))
-myPortfolioOBX = list(('MOWI.OL', 'NHY.OL', 'SSO.OL', 'EQNR.OL', 'BAKKA.OL', 'DNB.OL', 'ORK.OL', 'NEL.OL', 'TEL.OL'))
 myPortfolioSP500 = list(('MSFT', 'AAPL', 'AMZN', 'FB', 'GOOGL', 'VZ', 'BRK-B'))
 
 profit = 0
@@ -135,7 +131,7 @@ profitWithHold = 0
 
 print("Start at:",  datetime.utcnow())
 print("Starting Capital: 10000$")
-for x in myPortfolioOSEBX:
+for x in myPortfolioSP500:
     # print(x)
     admin = Strat(x)
     profit += float(admin.MA20_50(show=False, tradingPower=10000))
@@ -145,9 +141,5 @@ print("Profit with hold: ", profitWithHold + "$\n")
 # print("Profit vs. profitWithHold: ", profit-profitWithHold)
 
 print("Finished at: ", datetime.utcnow())
-
-# admin = Strat("EQNR.OL")
-# print(admin.MA20_50())
-# print(admin.admin.df['Close'].head(1))
 
 

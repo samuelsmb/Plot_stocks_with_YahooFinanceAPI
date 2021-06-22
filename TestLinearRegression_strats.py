@@ -21,7 +21,6 @@ class Strat:
     def LinearRegression1(self, interval, tradeSum=10000, comission=40):
         m = float()
         b = float()
-        # account = 100000
         LRprofit = 0
         shares = 0
         buy=0
@@ -57,21 +56,17 @@ class Strat:
             LRprofit += (shares * self.admin.df['Close'].tail(1)) - tradeSum
             sell+=1
         
-        # print(self.admin.instrument, ": ", account)
         print("Len: ", len(self.admin.df), " ", self.instrument, "Buys: ", buy, "Sells: ", sell, "Total pris kurtasje: ", (buy+sell)*comission, "Profit eksl. kurtasje: ", LRprofit)
         return (LRprofit - ((buy+sell)*comission)) #kurtasje
 
     def LinearRegression2(self, interval, maxMoneyToSpend=10000, maxMoneyToSpendEachTrade=2000, comission=40):
         m = float()
         b = float()
-        # account = 100000
         LRprofit = 0
         shares = 0
         buy=0
         sell=0
-        moneySpent = 0 
-
-
+        moneySpent = 0
 
         shares += maxMoneyToSpendEachTrade/float(self.admin.df['Close'].head(1))
         moneySpent += maxMoneyToSpendEachTrade
@@ -104,21 +99,18 @@ class Strat:
             sell+=1
         
         # print(self.admin.instrument, ": ", account)
-        print("Len: ", len(self.admin.df), " ", self.instrument, "Buys: ", buy, "Sells: ", sell, "Total pris kurtasje: ", (buy+sell)*comission, "Profit eksl. kurtasje: ", LRprofit)
+        print("Len: ", len(self.admin.df), " ", self.instrument, "Buys: ", buy, "Sells: ", sell, "Total price of commisions: ", (buy+sell)*comission, "Profit excluding the commision: ", LRprofit)
         return (LRprofit - ((buy+sell)*comission)) #kurtasje
           
-
-myPortfolioOSEBX = list(('EQNR.OL', 'TEL.OL', 'DNB.OL', 'MOWI.OL', 'ODL.Ol', 'WAWI.OL', 'STB.OL', 'AUSS.OL', "STB.OL", "SRBNK.OL"))
-myPortfolioOBX = list(('MOWI.OL', 'NHY.OL', 'SSO.OL', 'EQNR.OL', 'BAKKA.OL', 'DNB.OL', 'ORK.OL', 'NEL.OL', 'TEL.OL'))
 myPortfolioSP500 = list(('MSFT', 'AAPL', 'AMZN', 'FB', 'GOOGL', 'VZ', 'BRK-B'))
 
 interval = 100
 profit = 0
 profitWithHold = 0
 
-print("Start at:",  datetime.utcnow())
+print("Started at:",  datetime.utcnow())
 
-for x in myPortfolioOSEBX:
+for x in myPortfolioSP500:
     # print(x)
     admin = Strat(x)
     profit += float(admin.LinearRegression2(interval=interval, maxMoneyToSpendEachTrade=5000, comission=10))
@@ -130,7 +122,7 @@ print("Profit with hold: ", profitWithHold, "\n")
 print("Finished at: ", datetime.utcnow())
 
 
-
+#Some testing with threads:
 ##########################Threads#################################
 
 # print("Start at:",  datetime.utcnow())
