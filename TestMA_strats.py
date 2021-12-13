@@ -3,7 +3,9 @@ import statistics
 import numpy as np
 import matplotlib
 from matplotlib import pyplot as plt
-from _datetime import datetime
+from datetime import datetime
+
+from TestLinearRegression_strats import test_compare_to_Hold
 
 class Strat:
     
@@ -65,9 +67,9 @@ class Strat:
 
         if (show):
             plt.figure()
-            plt.plot((admin.admin.df['MA50']), color='green')
-            plt.plot((admin.admin.df['MA100']), color='red')
-            plt.plot(admin.admin.df['Close'], color='blue')
+            plt.plot((self.admin.df['MA50']), color='green')
+            plt.plot((self.admin.df['MA100']), color='red')
+            plt.plot(self.admin.df['Close'], color='blue')
 
 
             plt.show()
@@ -115,31 +117,44 @@ class Strat:
 
         if (show):
             plt.figure()
-            plt.plot((admin.admin.df['MA20']), color='green')
-            plt.plot((admin.admin.df['MA50']), color='red')
-            plt.plot(admin.admin.df['Close'], color='blue')
+            plt.plot((self.admin.df['MA20']), color='green')
+            plt.plot((self.admin.df['MA50']), color='red')
+            plt.plot(self.admin.df['Close'], color='blue')
 
 
             plt.show()
         
         return (MAprofit - (buy+sell)*40)
 
-myPortfolioSP500 = list(('MSFT', 'AAPL', 'AMZN', 'FB', 'GOOGL', 'VZ', 'BRK-B'))
 
-profit = 0
-profitWithHold = 0
+def test_compare_to_hold(portfolio, tradingPower=10000, strategy=1):
+    profit = 0
+    profitWithHold = 0
 
-print("Start at:",  datetime.utcnow())
-print("Starting Capital: 10000$")
-for x in myPortfolioSP500:
-    # print(x)
-    admin = Strat(x)
-    profit += float(admin.MA20_50(show=False, tradingPower=10000))
-    profitWithHold += admin.admin.compareToHold()
-print("\nProfit: ", profit + "$")
-print("Profit with hold: ", profitWithHold + "$\n")
-# print("Profit vs. profitWithHold: ", profit-profitWithHold)
+    print("Start at:",  datetime.utcnow())
+    print("Starting Capital: %s$"%tradingPower)
 
-print("Finished at: ", datetime.utcnow())
+    if strategy == 1:
+        for x in portfolio:
+            # print(x)
+            admin = Strat(x)
+            profit += float(admin.MA20_50(show=False, tradingPower=tradingPower))
+            profitWithHold += admin.admin.compareToHold()
+    else:
+        for x in portfolio:
+            # print(x)
+            admin = Strat(x)
+            profit += float(admin.MA50_100(show=False, tradingPower=tradingPower))
+            profitWithHold += admin.admin.compareToHold()
+    
+    print("\nProfit: ", profit + "$")
+    print("Profit with hold: ", profitWithHold + "$\n")
+    # print("Profit vs. profitWithHold: ", profit-profitWithHold)
 
+    print("Finished at: ", datetime.utcnow())
+
+
+if __name__ == '__main__':
+    myPortfolioSP500 = list(('MSFT', 'AAPL', 'AMZN', 'FB', 'GOOGL', 'VZ', 'BRK-B'))
+    test_compare_to_Hold(myPortfolioSP500, 2)
 

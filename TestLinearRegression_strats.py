@@ -53,10 +53,21 @@ class Strat:
                 sell+=1
 
         if shares > 0:
-            LRprofit += (shares * self.admin.df['Close'].tail(1)) - tradeSum
+            s = self.admin.df['Close'].tail(1)
+            s = str(s).split()
+            print("s:= ",s[1] )
+
+            # LRprofit += float(s[1]) - moneySpent
+            LRprofit += (shares * float(s[1])) - tradeSum
             sell+=1
         
-        print("Len: ", len(self.admin.df), " ", self.instrument, "Buys: ", buy, "Sells: ", sell, "Total pris kurtasje: ", (buy+sell)*comission, "Profit eksl. kurtasje: ", LRprofit)
+        print("\n-------------------"+self.instrument+"--------------------")
+        print("Len: ", len(self.admin.df))
+        print("Buys: ", buy)
+        print("Sells: ", sell)
+        print("Total price of commisions: ", (buy+sell)*comission)
+        print("Profit excluding the commision: ", LRprofit)
+        print("-------------------"+self.instrument+"--------------------")
         return (LRprofit - ((buy+sell)*comission)) #kurtasje
 
     def LinearRegression2(self, interval, maxMoneyToSpend=10000, maxMoneyToSpendEachTrade=2000, comission=40):
@@ -90,36 +101,66 @@ class Strat:
             elif (m < 0):
                 sharesToSell = shares/5
                 LRprofit += (sharesToSell * close) - (moneySpent/5)
+                # print("elif:", LRprofit)
                 moneySpent -= (moneySpent/5)
                 shares -= sharesToSell
                 sell+=1
 
         if shares > 0:
-            LRprofit += (shares * self.admin.df['Close'].tail(1)) - moneySpent
+            # LRprofit += self.admin.df['Close'].iloc[len(data):len(data)].values[0] - moneySpent
+            s = self.admin.df['Close'].tail(1)
+            s = str(s).split()
+            # print("s:= ",s[1] )
+
+            LRprofit += (shares*float(s[1])) - moneySpent
+            # print("if:", LRprofit)
+            # print(self.admin.df['Close'].tail(1).describe())
+
             sell+=1
         
         # print(self.admin.instrument, ": ", account)
-        print("Len: ", len(self.admin.df), " ", self.instrument, "Buys: ", buy, "Sells: ", sell, "Total price of commisions: ", (buy+sell)*comission, "Profit excluding the commision: ", LRprofit)
-        return (LRprofit - ((buy+sell)*comission)) #kurtasje
-          
-myPortfolioSP500 = list(('MSFT', 'AAPL', 'AMZN', 'FB', 'GOOGL', 'VZ', 'BRK-B'))
+        print("\n-------------------"+self.instrument+"--------------------")
+        print("Len: ", len(self.admin.df))
+        print("Buys: ", buy)
+        print("Sells: ", sell)
+        print("Total price of commisions: ", (buy+sell)*comission)
+        print("Profit excluding the commision: ", LRprofit)
+        print("-------------------"+self.instrument+"--------------------")
+        return (LRprofit - ((buy+sell)*comission)) #commision
+    
 
-interval = 100
-profit = 0
-profitWithHold = 0
 
-print("Started at:",  datetime.utcnow())
+def test_compare_to_Hold(portfolio, strategy=1):
+    interval = 100
+    profit = 0
+    profitWithHold = 0
 
-for x in myPortfolioSP500:
-    # print(x)
-    admin = Strat(x)
-    profit += float(admin.LinearRegression2(interval=interval, maxMoneyToSpendEachTrade=5000, comission=10))
-    profitWithHold += admin.admin.compareToHold(comission=10)
+    print("Started at:",  datetime.utcnow())
+    if strategy == 2:
+        for x in portfolio:
+            # print(x)
+            admin = Strat(x)
+            profit += float(admin.LinearRegression2(interval=interval, maxMoneyToSpendEachTrade=5000, comission=10))
+            profitWithHold += admin.admin.compareToHold(comission=10)
+    else:
+        for x in portfolio:
+            # print(x)
+            admin = Strat(x)
+            profit += float(admin.LinearRegression1(interval=interval, comission=10))
+            profitWithHold += admin.admin.compareToHold(comission=10)
 
-print("\nProfit: ", profit)
-print("Profit with hold: ", profitWithHold, "\n")
+    print("\nProfit: ", profit)
+    print("Profit with hold: ", profitWithHold, "\n")
 
-print("Finished at: ", datetime.utcnow())
+    print("Finished at: ", datetime.utcnow())
+
+
+if __name__ == '__main__':
+    myPortfolioSP500 = list(('MSFT', 'AAPL', 'AMZN', 'FB', 'GOOGL', 'VZ', 'BRK-B'))
+    # myPortfolioSP500 = ['MSFT']
+
+    test_compare_to_Hold(myPortfolioSP500, 1)
+
 
 
 #Some testing with threads:

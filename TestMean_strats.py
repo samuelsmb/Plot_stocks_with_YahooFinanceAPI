@@ -46,7 +46,7 @@ class Strat:
         
         return account
 
-
-admin = Strat('AAPL')
-# print(admin.admin.df)
-print(admin.meanStrat())
+if __name__ == '__main__':
+    admin = Strat('AAPL')
+    # print(admin.admin.df)
+    print(admin.meanStrat())

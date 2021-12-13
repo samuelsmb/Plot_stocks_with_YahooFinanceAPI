@@ -128,10 +128,10 @@ class Strat:
 
 
 
-
-#Example for Microsoft with strat 4:
-admin = Strat('MSFT')
-print("Account balance: ", admin.RSI_strat4())
-# print(np.concatenate(admin.admin.df.iloc[21:31 ,[8]].values[0:12]))
+if __name__ == '__main__':
+    #Example for Microsoft with strat 4:
+    admin = Strat('MSFT')
+    print("Account balance: ", admin.RSI_strat4())
+    # print(np.concatenate(admin.admin.df.iloc[21:31 ,[8]].values[0:12]))
 
 
