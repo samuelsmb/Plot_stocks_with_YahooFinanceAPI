@@ -14,7 +14,10 @@ class Strat:
 
         self.holdingPositions = np.empty((0), float)
 
-    def RSI_strat1(self, tradingpower=10000): # Buy the stock when the RSI level reaches or is above 65
+    def RSI_strat1(self, tradingpower=10000):
+        """
+        Buy the stock when the RSI level reaches or is above 65
+        """
 
         bought = False
         shares = float()
@@ -38,7 +41,10 @@ class Strat:
     
         return account
 
-    def RSI_strat2(self): #Buy the stock in multiple blocks while RSI shows momentum in the stock.
+    def RSI_strat2(self): 
+        """
+        Buy the stock in multiple blocks while RSI shows momentum in the stock.
+        """
 
         # for i in range(len(admin.df['RSI'])):
         account = 100000
@@ -67,9 +73,13 @@ class Strat:
         print(self.holdingPositions)
         return account
     
-    # We check what the mean RSI level has been during the last week and if the RSI_buy level now is higher or the same, we buy because we
-    # believe that the momentum will continue to increase further until it reaches RSI_sell 
+    
     def RSI_strat3(self, tradingpower=10000, RSI_buy=40, RSI_sell=60):  
+        """
+        We check what the mean RSI level has been during the last week and if the RSI_buy level now is higher or the same, we buy because we
+        believe that the momentum will continue to increase further until it reaches RSI_sell 
+        """
+
         account = tradingpower
         shares = float()
         moneySpent = 0
@@ -101,8 +111,11 @@ class Strat:
         print(self.holdingPositions)
         return account
 
-    #If the RSI level is above the preferred value, we buy and sell as soon as the stock can be sold for profit.
+
     def RSI_strat4(self, tradingpower=10000, RSI_value=60): 
+        """
+        If the RSI level is above the preferred value, we buy and sell as soon as the stock can be sold for profit.
+        """
 
         account = tradingpower
         shares = float()

@@ -5,7 +5,7 @@ import matplotlib
 from matplotlib import pyplot as plt
 from datetime import datetime
 
-from TestLinearRegression_strats import test_compare_to_Hold
+# from TestLinearRegression_strats import test_compare_to_Hold
 
 class Strat:
     
@@ -147,8 +147,8 @@ def test_compare_to_hold(portfolio, tradingPower=10000, strategy=1):
             profit += float(admin.MA50_100(show=False, tradingPower=tradingPower))
             profitWithHold += admin.admin.compareToHold()
     
-    print("\nProfit: ", profit + "$")
-    print("Profit with hold: ", profitWithHold + "$\n")
+    print("\nProfit: ", profit, "$")
+    print("Profit by just holding: ", profitWithHold, "$\n")
     # print("Profit vs. profitWithHold: ", profit-profitWithHold)
 
     print("Finished at: ", datetime.utcnow())
@@ -156,5 +156,5 @@ def test_compare_to_hold(portfolio, tradingPower=10000, strategy=1):
 
 if __name__ == '__main__':
     myPortfolioSP500 = list(('MSFT', 'AAPL', 'AMZN', 'FB', 'GOOGL', 'VZ', 'BRK-B'))
-    test_compare_to_Hold(myPortfolioSP500, 2)
+    test_compare_to_hold(myPortfolioSP500, strategy=2)
 

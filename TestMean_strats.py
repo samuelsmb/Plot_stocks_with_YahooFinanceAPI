@@ -14,13 +14,17 @@ class Strat:
         self.holdingPositions = np.empty((0), float)
     
     
-    #Based upon finding the mean price of what a stock has been during a couple of days. If the price of that stock falls below
-    #this mean price, we will buy some stocks because we in theory can believe that the price will increase back to the mean price.
-    #However in this case we will sell them again at the moment the price of the stock can be sold for a profit. 
-    #Since we expect the price to rise again, we can asume that there is a fair chance of making a profit since the price should
-    #should go up.
-    def meanStrat(self):
-        account = 100000
+ 
+    def meanStrat(self, tradingPower=10000):
+        """
+        Based upon finding the mean price of what a stock has been during a couple of days. If the price of that stock falls below
+        this mean price, we will buy some stocks because we in theory can believe that the price will increase back to the mean price.
+        
+        However in this case we will sell them again at the moment the price of the stock can be sold for a profit. 
+        Since we expect the price to rise again, we can asume that there is a fair chance of making a profit since the price should
+        go up.
+        """
+        account = tradingPower
         shares = float()
         moneySpent = 0
         p = np.empty((0), int)
@@ -35,18 +39,21 @@ class Strat:
 
             if close < meanClose and bought == False:
                 targetPrice = meanClose
-                shares = 10000 / close
+                shares = tradingPower / close
                 bought = True
-                account -= 10000
+                account -= tradingPower
             
             elif (close > targetPrice and bought == True):
                 account+= (close*shares)
                 shares=0
                 bought=False
         
-        return account
+        return account[0]
 
 if __name__ == '__main__':
     admin = Strat('AAPL')
     # print(admin.admin.df)
-    print(admin.meanStrat())
+    profit = admin.meanStrat()
+    profitWithHold = admin.admin.compareToHold()
+    print("\nProfit with mean strategy: ", profit, "$")
+    print("Profit with hold: ", profitWithHold, "$\n")
