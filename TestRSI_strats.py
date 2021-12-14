@@ -16,7 +16,7 @@ class Strat:
 
     def RSI_strat1(self, tradingpower=10000):
         """
-        Buy the stock when the RSI level reaches or is above 65
+        Buy the stock when the RSI level reaches or is above 65 and sell when it goes below 55
         """
 
         bought = False
