@@ -44,11 +44,16 @@ If the RSI level is above the preferred value, we buy and sell as soon as the st
 
 ## Example plot: Historical chart of AAPL 
 ![](screenshots/AAPL_Historical_chart.png)
+<img src="screenshots/AAPL_Historical_chart.png" width=100>
 
 ## Example plot: RSI chart of AAPL 
+<img src="screenshots/AAPL_RSI_chart.png" width=100>
+
 ![](screenshots/AAPL_RSI_chart.png)
 
 ## Example plot: Percentage change chart of AAPL
+<img src="screenshots/AAPL_percentage_change_chart.png" width=100>
+
 ![](screenshots/AAPL_percentage_change_chart.png)
 
 
