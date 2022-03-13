@@ -42,13 +42,19 @@ We check what the mean RSI level has been during the last week and if the RSI_bu
 If the RSI level is above the preferred value, we buy and sell as soon as the stock can be sold for profit.
 
 
-## Example plot: Historical chart of AAPL 
+## Example plot: Historical chart of AAPL With Bollinger Bands (BBI)
+<img src="screenshots/AAPL_Historical_chart.png" width=100>
+
 ![](screenshots/AAPL_Historical_chart.png)
 
 ## Example plot: RSI chart of AAPL 
+<img src="screenshots/AAPL_RSI_chart.png" width=100>
+
 ![](screenshots/AAPL_RSI_chart.png)
 
 ## Example plot: Percentage change chart of AAPL
+<img src="screenshots/AAPL_percentage_change_chart.png" width=100>
+
 ![](screenshots/AAPL_percentage_change_chart.png)
 
 
