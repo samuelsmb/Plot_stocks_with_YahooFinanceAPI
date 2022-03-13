@@ -1,6 +1,11 @@
 # Plot_stocks_with_YahooFinanceAPI
 Plot techincal analysis tools such as RSI, BBI, Best Fit Line, simple moving average and percentage changes on stocks with the Yahoo Finance API and try out some pre-made trading strategies using Python.
 
+## Requirements:
+Assuming that you have Python and pip installed, run the command pip install -r requirements.txt
+
+After that, head over to pypi.org to read the documentation and to download the market data from Yahoo! Finance API: https://pypi.org/project/yfinance/ 
+
 ## The strategies:
 
 ### TestLinearRegression_strats:
